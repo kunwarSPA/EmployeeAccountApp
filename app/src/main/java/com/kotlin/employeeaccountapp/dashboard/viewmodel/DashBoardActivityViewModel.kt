@@ -1,33 +1,63 @@
 package com.kotlin.employeeaccountapp.dashboard.viewmodel
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.employee.domain.login.repository.UserDataRepository
-import com.kotlin.employeeaccountapp.login.entity.LoggedInUser
-import com.kotlin.employeeaccountapp.login.di.entryPoint.UserComponentEntryPoint
-import com.kotlin.employeeaccountapp.login.di.handler.UserComponentHandler
-import dagger.hilt.EntryPoints
+import com.employee.domain.common.usecase.BaseUseCase
+import com.employee.domain.login.entity.response.EmployeeData
+import com.employee.domain.login.result.APIResult
+import com.employee.domain.login.usecase.EmployeeDetailUseCase
+import com.kotlin.employeeaccountapp.common.di.addTo
+
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class DashBoardActivityViewModel @ViewModelInject constructor(
-    private val userComponentHandler: UserComponentHandler
+    private val employeeDetailUseCase: EmployeeDetailUseCase
 ) : ViewModel() {
-    var userDataLiveData = MutableLiveData<LoggedInUser>()
-    var notificationLiveData = MutableLiveData<Int>()
-    private var userDataRepository: UserDataRepository
+    var userDataLiveData = MutableLiveData<APIResult<EmployeeData>>()
+    private val disposables = CompositeDisposable()
+    val progressVisible = MutableLiveData<Boolean>()
 
-    init {
-        val entryPoint = EntryPoints.get(userComponentHandler, UserComponentEntryPoint::class.java)
-        userDataLiveData.value = entryPoint.getLoggedInUser()
-        userDataRepository = entryPoint.getUserDataRepository()
 
-        userDataRepository.refreshNotification()
-        Log.d("REPOSITORY", userDataRepository.toString())
+    fun getEmployeeDetail(employeeLogin: Int) {
+        employeeDetailUseCase.getEmployeeDetail(employeeLogin,true,allUsersUseCaseCallback)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { handleResult(it) }
+            .addTo(disposables)
+        //  loginStatusLiveData.value = LoginStatus.Success
     }
 
-    fun getNotifications() {
-        Log.d("REPOSITORY", userDataRepository.toString())
-        notificationLiveData.value = userDataRepository.unreadNotification
+    private val allUsersUseCaseCallback = object : BaseUseCase.Callback<EmployeeData> {
+        override fun onSuccess(result: EmployeeData) {
+            userDataLiveData.value = APIResult.Success(data =result)
+        }
+
+        override fun onError(throwable: Throwable) {
+            userDataLiveData.value = APIResult.Failure(throwable.toString())
+        }
+    }
+
+
+
+    private fun handleResult(result: APIResult<EmployeeData>) {
+        when (result) {
+            is APIResult.Loading -> progressVisible.value = true
+            is APIResult.Success -> {
+
+                userDataLiveData.value = result
+            }
+            is APIResult.Failure -> {
+
+                userDataLiveData.value = result
+            }
+        }
+    }
+
+    override fun onCleared() {
+        disposables.dispose()
+        super.onCleared()
     }
 }

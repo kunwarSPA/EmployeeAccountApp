@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
+import com.employee.domain.login.entity.request.EmployeeLogin
 import com.kotlin.employeeaccountapp.login.viewmodel.LoginActivityViewModel
-import com.kotlin.employeeaccountapp.login.viewmodel.LoginStatus
 import com.kotlin.employeeaccountapp.dashboard.view.DashboardActivity
 import com.kotlin.employeeaccountapp.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,21 +28,19 @@ class LoginActivity : AppCompatActivity() {
         binding.submitButton.setOnClickListener {
             val username = binding.userIdInput.text.toString()
             val password = binding.passwordInput.text.toString()
-
-            viewModel.login(username, password)
+            val employeeLogin = EmployeeLogin(username,password)
+            viewModel.login(employeeLogin)
         }
     }
 
-    private fun onLoginStatusUpdate(loginStatus: LoginStatus) {
-        when (loginStatus) {
-            is LoginStatus.Success -> {
-                val intent = Intent(this, DashboardActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            is LoginStatus.Failure -> {
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
-            }
-        }
+    private fun onLoginStatusUpdate(loginStatus :String) {
+      if(loginStatus.contains("400")){
+          Toast.makeText(this,"SOMETHING WENT WRONG",Toast.LENGTH_LONG).show()
+      }else{
+          val intent = Intent(this, DashboardActivity::class.java)
+          startActivity(intent)
+          finish()
+
+      }
     }
 }

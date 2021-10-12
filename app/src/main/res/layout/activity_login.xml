@@ -30,6 +30,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/userIdInput"
             android:layout_width="match_parent"
+            android:text="eve.holt@reqres.in"
             android:layout_height="wrap_content"
             android:hint="@string/user_id" />
 
@@ -48,6 +49,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordInput"
             android:layout_width="match_parent"
+            android:text="cityslicka"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="@string/password" />

@@ -1,3 +1,3 @@
 package com.employee.domain.login.entity.request
 
-data class EmployeeLogin(val name: String,val password: String)
+data class EmployeeLogin(val email: String,val password: String)
