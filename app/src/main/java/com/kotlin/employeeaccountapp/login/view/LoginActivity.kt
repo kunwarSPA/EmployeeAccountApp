@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
       if(loginStatus.contains("400")){
           Toast.makeText(this,"SOMETHING WENT WRONG",Toast.LENGTH_LONG).show()
       }else{
-          preferences.setLoggedIn(true)
+          preferences.setLoggedIn(loginStatus)
           val intent = Intent(this, DashboardActivity::class.java)
           startActivity(intent)
           finish()

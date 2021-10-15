@@ -72,6 +72,65 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/completeName" />
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        app:icon="@drawable/plus"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/logout_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/black"
+        app:fabSize="normal"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/add_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_fab"
+        app:srcCompat="@drawable/logout"
+        android:contentDescription="@string/app_name" />
+    <!--Action name text for the add alarm button-->
+    <TextView
+        android:id="@+id/logout_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Logout"
+        app:layout_constraintBottom_toBottomOf="@+id/logout_fab"
+        app:layout_constraintEnd_toStartOf="@+id/logout_fab"
+        app:layout_constraintTop_toTopOf="@+id/logout_fab" />
+    <!--Floating action button for add person-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/edit_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/black"
+        app:fabSize="normal"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/logout_fab"
+        app:layout_constraintEnd_toEndOf="@+id/logout_fab"
+        app:layout_constraintStart_toStartOf="@+id/logout_fab"
+        app:srcCompat="@drawable/edit"
+        android:contentDescription="@string/app_name" />
+    <!--Action name text for the add person button-->
+    <TextView
+        android:id="@+id/edit_fab_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Edit"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_fab"
+        app:layout_constraintEnd_toStartOf="@+id/edit_fab"
+        app:layout_constraintTop_toTopOf="@+id/edit_fab" />
 
 
 

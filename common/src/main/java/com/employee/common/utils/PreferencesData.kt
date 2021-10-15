@@ -6,15 +6,15 @@ import javax.inject.Singleton
 
 @Singleton
 class PreferencesData @Inject constructor(){
-    private val LOGGED_IN = "login"
+    private val LOGGED_IN = "token"
 
     @Inject
     lateinit var prefs : SharedPreferences
 
     fun isLoggedIn(): Boolean {
-        return prefs.getBoolean(LOGGED_IN, false)
+        return !prefs.getString(LOGGED_IN, "").isNullOrEmpty()
     }
-    fun setLoggedIn(loggedIn: Boolean) {
-        prefs.edit().putBoolean(LOGGED_IN, loggedIn).apply()
+    fun setLoggedIn(loggedIn: String) {
+        prefs.edit().putString(LOGGED_IN, loggedIn).apply()
     }
 }

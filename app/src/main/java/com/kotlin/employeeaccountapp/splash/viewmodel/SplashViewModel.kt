@@ -9,7 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashViewModel  @ViewModelInject constructor(
-    myPreferences: PreferencesData
+    preferences: PreferencesData
 ) : ViewModel() {
 
     var loginStatusLiveData = MutableLiveData<Boolean>()
@@ -18,7 +18,7 @@ class SplashViewModel  @ViewModelInject constructor(
     init {
         viewModelScope.launch {
             delay(2000)
-            loginStatusLiveData.value =false
+            loginStatusLiveData.value =preferences.isLoggedIn()
         }
     }
 }
