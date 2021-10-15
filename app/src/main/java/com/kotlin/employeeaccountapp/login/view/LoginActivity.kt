@@ -6,18 +6,21 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
+import com.employee.common.utils.PreferencesData
 import com.employee.domain.login.entity.request.EmployeeLogin
-import com.kotlin.employeeaccountapp.login.viewmodel.LoginActivityViewModel
 import com.kotlin.employeeaccountapp.dashboard.view.DashboardActivity
 import com.kotlin.employeeaccountapp.databinding.ActivityLoginBinding
+import com.kotlin.employeeaccountapp.login.viewmodel.LoginActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginActivityViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
-
+    @Inject
+    lateinit var preferences: PreferencesData
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -37,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
       if(loginStatus.contains("400")){
           Toast.makeText(this,"SOMETHING WENT WRONG",Toast.LENGTH_LONG).show()
       }else{
+          preferences.setLoggedIn(true)
           val intent = Intent(this, DashboardActivity::class.java)
           startActivity(intent)
           finish()

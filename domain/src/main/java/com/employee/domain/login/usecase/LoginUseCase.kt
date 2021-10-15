@@ -3,9 +3,9 @@ package com.employee.domain.login.usecase
 import com.employee.domain.login.entity.request.EmployeeLogin
 import com.employee.domain.login.entity.response.LoginResponse
 import com.employee.domain.login.repository.LoginRepository
-import javax.inject.Inject
 import com.employee.domain.login.result.APIResult
 import io.reactivex.Observable
+import javax.inject.Inject
 
 class LoginUseCase  @Inject constructor(private val repository: LoginRepository) {
 

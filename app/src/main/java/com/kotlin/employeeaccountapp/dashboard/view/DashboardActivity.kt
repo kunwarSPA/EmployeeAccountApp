@@ -1,20 +1,14 @@
 package com.kotlin.employeeaccountapp.dashboard.view
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.employee.domain.login.entity.response.EmployeeData
-import com.employee.domain.login.entity.response.UsersResponse
 import com.employee.domain.login.result.APIResult
-import com.kotlin.employeeaccountapp.account.view.AccountActivity
 import com.kotlin.employeeaccountapp.dashboard.viewmodel.DashBoardActivityViewModel
 import com.kotlin.employeeaccountapp.databinding.ActivityDashboardBinding
-import com.kotlin.employeeaccountapp.employee.viewmodel.UserStatus
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

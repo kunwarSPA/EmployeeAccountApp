@@ -19,10 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".account.view.AccountActivity" />
         <activity android:name=".dashboard.view.DashboardActivity" />
         <activity android:name=".login.view.LoginActivity" />
-        <activity android:name=".employee.view.EmployeeActivity" />
     </application>
 
 </manifest>

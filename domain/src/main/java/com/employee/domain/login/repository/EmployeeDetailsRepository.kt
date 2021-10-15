@@ -1,7 +1,6 @@
 package com.employee.domain.login.repository
 
 import com.employee.domain.login.entity.response.EmployeeData
-import com.employee.domain.login.entity.response.UserResponse
 import io.reactivex.Single
 
 interface EmployeeDetailsRepository {

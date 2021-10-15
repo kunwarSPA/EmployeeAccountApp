@@ -1,16 +1,15 @@
 package com.employee.data.login.api
 
 import com.employee.domain.login.entity.request.EmployeeLogin
-import com.employee.domain.login.entity.response.*
+import com.employee.domain.login.entity.response.EmployeeData
+import com.employee.domain.login.entity.response.LoginResponse
 import io.reactivex.Single
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface Api {
-    @GET("/api/users")
-    suspend fun getUsers(@Query("page") page: Int): UsersResponse
-
-    @GET("/api/users/{userId}")
-    suspend fun getUser(@Path("userId") userId: Int): UserResponse
 
     @POST("/api/login")
      fun login(@Body employeeLogin: EmployeeLogin): Single<LoginResponse>

@@ -3,11 +3,11 @@ package com.kotlin.employeeaccountapp.login.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.employee.common.di.addTo
 import com.employee.domain.login.entity.request.EmployeeLogin
 import com.employee.domain.login.entity.response.LoginResponse
 import com.employee.domain.login.result.APIResult
 import com.employee.domain.login.usecase.LoginUseCase
-import com.kotlin.employeeaccountapp.common.di.addTo
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

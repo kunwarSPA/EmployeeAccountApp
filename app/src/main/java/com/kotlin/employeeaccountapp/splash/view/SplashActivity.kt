@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
-import com.kotlin.employeeaccountapp.login.view.LoginActivity
 import com.kotlin.employeeaccountapp.dashboard.view.DashboardActivity
 import com.kotlin.employeeaccountapp.databinding.ActivitySplashBinding
+import com.kotlin.employeeaccountapp.login.view.LoginActivity
 import com.kotlin.employeeaccountapp.splash.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
