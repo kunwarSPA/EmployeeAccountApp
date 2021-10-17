@@ -1,13 +1,11 @@
 package com.employee.data.login.api
 
 import com.employee.domain.login.entity.request.EmployeeLogin
+import com.employee.domain.login.entity.request.EmployeeUpdate
 import com.employee.domain.login.entity.response.EmployeeData
 import com.employee.domain.login.entity.response.LoginResponse
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface Api {
 
@@ -20,6 +18,6 @@ interface Api {
     @GET("/api/users/{userId}")
     fun getUserDetail(@Path("userId") userId: Int): Single<EmployeeData>
 
-    @POST("/api/users/{}")
-    fun editUserDetail(@Body userId: Int): Single<EmployeeData>
+    @PUT("/api/users/{userId}")
+    suspend fun editUserDetail(@Path("userId") userId: Int,@Body employeeUpdate: EmployeeUpdate): EmployeeUpdate
 }
