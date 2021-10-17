@@ -53,7 +53,9 @@ class DashboardActivity : AppCompatActivity(), OnDashboardCallback  {
     }
 
     override fun navigateToLoginPage() {
-        TODO("Not yet implemented")
+        preferences.setLoggedIn("")
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
 
