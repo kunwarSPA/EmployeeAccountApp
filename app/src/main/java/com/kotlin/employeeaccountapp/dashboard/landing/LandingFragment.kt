@@ -1,7 +1,6 @@
 package com.kotlin.employeeaccountapp.dashboard.landing
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import com.employee.domain.login.result.APIResult
 import com.kotlin.employeeaccountapp.dashboard.view.OnDashboardCallback
 import com.kotlin.employeeaccountapp.dashboard.viewmodel.DashBoardActivityViewModel
 import com.kotlin.employeeaccountapp.databinding.FragmentDashboardBinding
-import com.kotlin.employeeaccountapp.login.view.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,19 +37,15 @@ class LandingFragment : Fragment() {
         } else throw ClassCastException(context.toString() + "must implement OnDashboardCallback!")
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentDashboardBinding.inflate( inflater,container, false)
+        binding = FragmentDashboardBinding.inflate(inflater, container, false)
         viewModel.userDataLiveData.observe(viewLifecycleOwner, ::userStatusUpdate)
         viewModel.getEmployeeDetail(1)
-        binding.editFab.visibility = View.GONE;
-        binding.editFabTv.visibility = View.GONE;
-        binding.logoutFab.visibility = View.GONE;
-        binding.logoutTv.visibility = View.GONE;
-        isAllFabVisible = false;
+        binding.editFab.visibility = View.GONE
+        binding.editFabTv.visibility = View.GONE
+        binding.logoutFab.visibility = View.GONE
+        binding.logoutTv.visibility = View.GONE
+        isAllFabVisible = false
         binding.addFab.shrink()
         binding.addFab.setOnClickListener {
             isAllFabVisible = if (!isAllFabVisible!!) {
@@ -75,9 +69,7 @@ class LandingFragment : Fragment() {
         }
         binding.logoutFab.setOnClickListener {
 
-            preferences.setLoggedIn("")
-            startActivity(Intent(this.activity, LoginActivity::class.java))
-            activity?.finish()
+            mCallback?.navigateToLoginPage()
         }
         return binding.root
     }

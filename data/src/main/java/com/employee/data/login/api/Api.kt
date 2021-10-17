@@ -12,7 +12,7 @@ interface Api {
     @POST("/api/login")
      fun login(@Body employeeLogin: EmployeeLogin): Single<LoginResponse>
 
-    @POST("/api/login")
+    @POST("/api/logout")
     fun logout(@Body employeeLogin: String): Single<String>
 
     @GET("/api/users/{userId}")
