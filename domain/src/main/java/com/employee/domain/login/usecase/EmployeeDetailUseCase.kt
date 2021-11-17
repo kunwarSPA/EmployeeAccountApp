@@ -14,11 +14,9 @@ class EmployeeDetailUseCase   @Inject constructor(private val repository: Employ
         employeeId: Int,
         callback: BaseUseCase.Callback<EmployeeData>
     ): Observable<APIResult<EmployeeData>> {
-
         return repository.getUserDetail(employeeId).toObservable().map {
             val data = it
             callback.onSuccess(data)
-            repository.updateEmployeeData(it)
             APIResult.Success(data)
 
         }

@@ -3,7 +3,6 @@ package com.kotlin.employeeaccountapp.splash.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
@@ -40,7 +39,7 @@ class SplashActivity : AppCompatActivity(){
                 // Log and toast
                 val msg = getString(R.string.app_token)
                 Log.d("TAG", msg)
-                Toast.makeText(this, msg + " " + token, Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, msg + " " + token, Toast.LENGTH_SHORT).show()
 
             })
         viewModel.loginStatusLiveData.observe(this) {
