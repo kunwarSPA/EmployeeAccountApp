@@ -1,6 +1,8 @@
 plugins {
     id 'java-library'
     id 'kotlin'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 java {
@@ -19,4 +21,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.10.2'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.1'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
+    // Room
+    api "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    api "androidx.room:room-ktx:$roomVersion"
 }

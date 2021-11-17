@@ -11,12 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.employee.common.utils.PreferencesData
 import com.employee.domain.login.entity.request.EmployeeUpdate
-import com.employee.domain.login.entity.response.EmployeeData
 import com.employee.domain.login.result.APIResult
-import com.kotlin.employeeaccountapp.dashboard.landing.LandingFragment
 import com.kotlin.employeeaccountapp.dashboard.view.OnDashboardCallback
 import com.kotlin.employeeaccountapp.dashboard.viewmodel.DashBoardActivityViewModel
-import com.kotlin.employeeaccountapp.databinding.FragmentDashboardBinding
 import com.kotlin.employeeaccountapp.databinding.FragmentEditBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,10 +27,6 @@ class EditFragment : Fragment() {
     private lateinit var binding: FragmentEditBinding
     private var isAllFabVisible: Boolean? = null
     private var mCallback: OnDashboardCallback? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,13 +52,13 @@ class EditFragment : Fragment() {
     }
 
     private fun userStatusUpdate(result: APIResult<EmployeeUpdate>) {
-        print(result)
         when (result) {
             is APIResult.Loading -> {
                 print("Loading")
             }
             is APIResult.Success -> {
-                Toast.makeText(activity,"Updated Successfully",Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Updated Successfully", Toast.LENGTH_LONG).show()
+
                 mCallback?.navigateToDashboardPage()
             }
             is APIResult.Failure -> {

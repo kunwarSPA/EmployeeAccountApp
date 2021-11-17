@@ -10,8 +10,6 @@ import com.employee.domain.login.entity.request.EmployeeUpdate
 import com.employee.domain.login.entity.response.EmployeeData
 import com.employee.domain.login.result.APIResult
 import com.employee.domain.login.usecase.EmployeeDetailUseCase
-import io.reactivex.Single
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -26,40 +24,52 @@ class DashBoardActivityViewModel @ViewModelInject constructor(
     val progressVisible = MutableLiveData<Boolean>()
 
 
-    fun getEmployeeDetail(employeeLogin: Int) {
-        employeeDetailUseCase.getEmployeeDetail(employeeLogin,true,allUsersUseCaseCallback)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { handleResultAllUser(it) }
-            .addTo(disposables)
-
+    fun getEmployeeDetail(employeeLogin: Int, hasNetwork: Boolean) {
+        if (hasNetwork) {
+            employeeDetailUseCase.getEmployeeDetail(
+                employeeLogin,
+                allUsersUseCaseCallback
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { allUsersUseCaseCallback }
+                .addTo(disposables)
+        } else {
+            employeeDetailUseCase.getEmployeeDetailFromDb(employeeLogin, allUsersUseCaseCallback)
+        }
         //  loginStatusLiveData.value = LoginStatus.Success
     }
 
-    fun updateEmployeeDetail(userId :Int,employeeData: EmployeeUpdate){
+    fun updateEmployeeDetail(userId: Int, employeeData: EmployeeUpdate) {
         viewModelScope.launch {
-            employeeDetailUseCase.updateEmployeeDetail(employeeData,userId,true,updateUserUseCaseCallback)
+            employeeDetailUseCase.updateEmployeeDetail(
+                employeeData,
+                userId,
+                true,
+                updateUserUseCaseCallback
+            )
         }
     }
 
-   /* fun getUser(id: Int) {
-        viewModelScope.launch {
-            getUserUseCase.execute(id, userUseCaseCallback)
-        }
-    }*/
+    /* fun getUser(id: Int) {
+         viewModelScope.launch {
+             getUserUseCase.execute(id, userUseCaseCallback)
+         }
+     }*/
 
     private val allUsersUseCaseCallback = object : BaseUseCase.Callback<EmployeeData> {
         override fun onSuccess(result: EmployeeData) {
-            userDataLiveData.value = APIResult.Success(data =result)
+            userDataLiveData.postValue(APIResult.Success(data = result))
         }
 
         override fun onError(throwable: Throwable) {
-            userDataLiveData.value = APIResult.Failure(throwable.toString())
+            userDataLiveData.postValue(APIResult.Failure(throwable.toString()))
         }
     }
 
     private val updateUserUseCaseCallback = object : BaseUseCase.Callback<EmployeeUpdate> {
         override fun onSuccess(result: EmployeeUpdate) {
+            // employeeDetailUseCase.updateEmployeeDetailInDb()
             updateUserDataLiveData.value = APIResult.Success(data =result)
         }
 

@@ -40,7 +40,7 @@ class LandingFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentDashboardBinding.inflate(inflater, container, false)
         viewModel.userDataLiveData.observe(viewLifecycleOwner, ::userStatusUpdate)
-        viewModel.getEmployeeDetail(1)
+        viewModel.getEmployeeDetail(1, true)
         binding.editFab.visibility = View.GONE
         binding.editFabTv.visibility = View.GONE
         binding.logoutFab.visibility = View.GONE
@@ -95,6 +95,7 @@ class LandingFragment : Fragment() {
         binding.completeName.text = employeeData.data.first_name + "  " + employeeData.data.last_name
         binding.userEmail.text = employeeData.data.email
         Glide.with(this).load(employeeData.data.avatar).centerCrop().into(binding.userIcon)
+            .clearOnDetach()
 
     }
 
