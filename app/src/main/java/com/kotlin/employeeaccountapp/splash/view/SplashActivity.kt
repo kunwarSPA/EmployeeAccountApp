@@ -39,7 +39,7 @@ class SplashActivity : AppCompatActivity(){
                 // Log and toast
                 val msg = getString(R.string.app_token)
                 Log.d("TAG", msg)
-                // Toast.makeText(this, msg + " " + token, Toast.LENGTH_SHORT).show()
+               // Toast.makeText(this, msg + " " + token, Toast.LENGTH_SHORT).show()
 
             })
         viewModel.loginStatusLiveData.observe(this) {

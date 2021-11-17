@@ -10,14 +10,11 @@ import javax.inject.Inject
 
 class EmployeeDetailUseCase   @Inject constructor(private val repository: EmployeeDetailsRepository) {
 
-    fun getEmployeeDetail(
-        employeeId: Int,
-        callback: BaseUseCase.Callback<EmployeeData>
-    ): Observable<APIResult<EmployeeData>> {
+    fun getEmployeeDetail(employeeId: Int,  callback: BaseUseCase.Callback<EmployeeData>): Observable<APIResult<EmployeeData>> {
         return repository.getUserDetail(employeeId).toObservable().map {
             val data = it
             callback.onSuccess(data)
-            APIResult.Success(data)
+            APIResult.Success(data) as  APIResult<EmployeeData>
 
         }
             .onErrorReturn {
