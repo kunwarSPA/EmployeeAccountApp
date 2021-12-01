@@ -4,8 +4,12 @@ import com.employee.common.BuildConfig
 import com.employee.data.login.api.Api
 import com.employee.data.login.repositoryImpl.EmployeeDetailsRepositoryImpl
 import com.employee.data.login.repositoryImpl.LoginRepositoryImpl
+import com.employee.data.login.useCaseImpl.EmployeeDetailUseCaseImpl
+import com.employee.data.login.useCaseImpl.LoginUseCaseImpl
 import com.employee.domain.login.repository.EmployeeDetailsRepository
 import com.employee.domain.login.repository.LoginRepository
+import com.employee.domain.login.usecase.EmployeeDetailUseCase
+import com.employee.domain.login.usecase.LoginUseCase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -55,17 +59,23 @@ class NetworkModule {
     fun providesAPI(retrofit: Retrofit.Builder): Api {
         return retrofit.build().create(Api::class.java)
     }
-/*
-    @Singleton
-    @Provides
-    fun providesUserRepository(userRepository: UserRepositoryImpl): UserRepository {
-        return userRepository
-    }*/
+
 
     @Singleton
     @Provides
-    fun providesLoginRepository(loginRepository: LoginRepositoryImpl): LoginRepository {
-        return loginRepository
+    fun providesLoginRepository(api : Api): LoginRepository {
+        return LoginRepositoryImpl(api)
+    }
+    @Singleton
+    @Provides
+    fun provideLoginUseCase(loginRepository: LoginRepository) : LoginUseCase {
+        return  LoginUseCaseImpl(loginRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideEmployeeDetailsUseCase(employeeDetailsRepository: EmployeeDetailsRepository) : EmployeeDetailUseCase {
+        return  EmployeeDetailUseCaseImpl(employeeDetailsRepository)
     }
 
     @Singleton

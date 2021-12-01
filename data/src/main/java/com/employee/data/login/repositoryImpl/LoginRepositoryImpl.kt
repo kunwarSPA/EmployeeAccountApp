@@ -5,9 +5,8 @@ import com.employee.domain.login.entity.request.EmployeeLogin
 import com.employee.domain.login.entity.response.LoginResponse
 import com.employee.domain.login.repository.LoginRepository
 import io.reactivex.Single
-import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(private val api: Api) : LoginRepository {
+class LoginRepositoryImpl constructor(private val api: Api) : LoginRepository {
     override  fun login(employeeLogin: EmployeeLogin): Single<LoginResponse> {
         return api.login(employeeLogin)
     }

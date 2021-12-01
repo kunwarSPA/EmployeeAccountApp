@@ -79,7 +79,13 @@ class DashBoardActivityViewModel @ViewModelInject constructor(
     }
 
 
-    private fun handleResultUpdateUser(result: APIResult<EmployeeUpdate>) {
+    override fun onCleared() {
+        disposables.dispose()
+        super.onCleared()
+    }
+
+
+ /*   private fun handleResultUpdateUser(result: APIResult<EmployeeUpdate>) {
         when (result) {
             is APIResult.Loading -> progressVisible.value = true
             is APIResult.Success -> {
@@ -105,10 +111,6 @@ class DashBoardActivityViewModel @ViewModelInject constructor(
                 userDataLiveData.postValue(result)
             }
         }
-    }
+    }*/
 
-    override fun onCleared() {
-        disposables.dispose()
-        super.onCleared()
-    }
 }
