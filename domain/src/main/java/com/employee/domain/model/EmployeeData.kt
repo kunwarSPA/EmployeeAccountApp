@@ -1,13 +1,9 @@
-package com.employee.domain.login.entity.response
+package com.employee.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-
-data class EmployeeData(val `data`: Data)
-
 @Entity(tableName = "EmployeeData")
-data class Data(
+data class EmployeeData (
     val avatar: String,
     val email: String,
     val first_name: String,

@@ -1,4 +1,4 @@
-package com.employee.domain.login.entity.response
+package com.employee.data.login.response
 
  class LoginResponse {
      val token: String = ""

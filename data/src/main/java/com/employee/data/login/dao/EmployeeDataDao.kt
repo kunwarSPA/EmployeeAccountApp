@@ -1,21 +1,21 @@
 package com.employee.data.login.dao
 
 import androidx.room.*
-import com.employee.domain.login.entity.response.Data
+import com.employee.domain.model.EmployeeData
 
 @Dao
 interface EmployeeDataDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(employeeData: Data): Long
+    fun insert(employeeData: EmployeeData): Long
 
     @Delete
-    fun delete(employeeData: Data)
+    fun delete(employeeData: EmployeeData)
 
     @Update
-    fun update(employeeData: Data)
+    fun update(employeeData: EmployeeData)
 
 
     @Query("SELECT * FROM EmployeeData where id = :employeeId")
-    fun loadEmployee(employeeId: Int): Data
+    fun loadEmployee(employeeId: Int): EmployeeData
 }

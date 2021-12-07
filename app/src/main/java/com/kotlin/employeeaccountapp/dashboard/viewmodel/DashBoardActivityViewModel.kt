@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.employee.common.di.addTo
-import com.employee.domain.common.usecase.BaseUseCase
+import com.employee.domain.common.usecase.Callback
 import com.employee.domain.login.entity.request.EmployeeUpdate
-import com.employee.domain.login.entity.response.EmployeeData
 import com.employee.domain.login.result.APIResult
 import com.employee.domain.login.usecase.EmployeeDetailUseCase
+import com.employee.domain.model.EmployeeData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -57,7 +57,7 @@ class DashBoardActivityViewModel @ViewModelInject constructor(
          }
      }*/
 
-    private val allUsersUseCaseCallback = object : BaseUseCase.Callback<EmployeeData> {
+    private val allUsersUseCaseCallback = object : Callback<EmployeeData> {
         override fun onSuccess(result: EmployeeData) {
             userDataLiveData.postValue(APIResult.Success(data = result))
         }
@@ -67,7 +67,7 @@ class DashBoardActivityViewModel @ViewModelInject constructor(
         }
     }
 
-    private val updateUserUseCaseCallback = object : BaseUseCase.Callback<EmployeeUpdate> {
+    private val updateUserUseCaseCallback = object : Callback<EmployeeUpdate> {
         override fun onSuccess(result: EmployeeUpdate) {
             // employeeDetailUseCase.updateEmployeeDetailInDb()
             updateUserDataLiveData.value = APIResult.Success(data =result)

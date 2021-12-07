@@ -5,16 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.employee.common.di.addTo
 import com.employee.domain.login.entity.request.EmployeeLogin
-import com.employee.domain.login.entity.response.LoginResponse
 import com.employee.domain.login.result.APIResult
 import com.employee.domain.login.usecase.LoginUseCase
+import com.employee.domain.model.LoginData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-class LoginActivityViewModel @ViewModelInject constructor(
-    private val loginUseCase: LoginUseCase
+class LoginActivityViewModel @ViewModelInject constructor(private val loginUseCase: LoginUseCase
 ) : ViewModel() {
     var loginStatusLiveData = MutableLiveData<String>()
     private val disposables = CompositeDisposable()
@@ -29,7 +28,7 @@ class LoginActivityViewModel @ViewModelInject constructor(
     }
 
 
-    private fun handleResult(result: APIResult<LoginResponse>) {
+    private fun handleResult(result: APIResult<LoginData>) {
         when (result) {
             is APIResult.Loading -> progressVisible.value = true
             is APIResult.Success -> {

@@ -11,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.employee.common.utils.PreferencesData
-import com.employee.domain.login.entity.response.EmployeeData
 import com.employee.domain.login.result.APIResult
+import com.employee.domain.model.EmployeeData
 import com.kotlin.employeeaccountapp.dashboard.view.OnDashboardCallback
 import com.kotlin.employeeaccountapp.dashboard.viewmodel.DashBoardActivityViewModel
 import com.kotlin.employeeaccountapp.databinding.FragmentDashboardBinding
@@ -91,10 +91,10 @@ class LandingFragment : Fragment() {
 
 
     private fun populateEmployeeInitials(employeeData: EmployeeData) {
-        binding.nameText.text = "Welcome " + employeeData.data.first_name
-        binding.completeName.text = employeeData.data.first_name + "  " + employeeData.data.last_name
-        binding.userEmail.text = employeeData.data.email
-        Glide.with(this).load(employeeData.data.avatar).centerCrop().into(binding.userIcon)
+        binding.nameText.text = "Welcome " + employeeData.first_name
+        binding.completeName.text = employeeData.first_name + "  " + employeeData.last_name
+        binding.userEmail.text = employeeData.email
+        Glide.with(this).load(employeeData.avatar).centerCrop().into(binding.userIcon)
             .clearOnDetach()
 
     }

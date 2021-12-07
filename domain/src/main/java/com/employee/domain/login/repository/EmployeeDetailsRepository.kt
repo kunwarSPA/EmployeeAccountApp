@@ -1,8 +1,7 @@
 package com.employee.domain.login.repository
 
 import com.employee.domain.login.entity.request.EmployeeUpdate
-import com.employee.domain.login.entity.response.Data
-import com.employee.domain.login.entity.response.EmployeeData
+import com.employee.domain.model.EmployeeData
 import io.reactivex.Single
 
 interface EmployeeDetailsRepository {
@@ -10,5 +9,5 @@ interface EmployeeDetailsRepository {
     suspend fun editUser(userId: Int, employeeUpdate: EmployeeUpdate): EmployeeUpdate
     fun getUserDetailFromLocalDb(userId: Int): EmployeeData
     fun updateEmployeeData(employeeData: EmployeeData): Long
-    fun updateEmployeeDetailInDb(employeeData: Data)
+    fun updateEmployeeDetailInDb(employeeData: EmployeeData)
 }

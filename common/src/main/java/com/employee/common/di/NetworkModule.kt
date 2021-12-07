@@ -1,7 +1,9 @@
 package com.employee.common.di
 
-import com.employee.common.BuildConfig
 import com.employee.data.login.api.Api
+import com.employee.data.login.database.AppDatabase
+import com.employee.data.login.mapper.EmployeeMapper
+import com.employee.data.login.mapper.LoginMapper
 import com.employee.data.login.repositoryImpl.EmployeeDetailsRepositoryImpl
 import com.employee.data.login.repositoryImpl.LoginRepositoryImpl
 import com.employee.data.login.useCaseImpl.EmployeeDetailUseCaseImpl
@@ -10,6 +12,7 @@ import com.employee.domain.login.repository.EmployeeDetailsRepository
 import com.employee.domain.login.repository.LoginRepository
 import com.employee.domain.login.usecase.EmployeeDetailUseCase
 import com.employee.domain.login.usecase.LoginUseCase
+import com.google.firebase.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -61,11 +64,7 @@ class NetworkModule {
     }
 
 
-    @Singleton
-    @Provides
-    fun providesLoginRepository(api : Api): LoginRepository {
-        return LoginRepositoryImpl(api)
-    }
+
     @Singleton
     @Provides
     fun provideLoginUseCase(loginRepository: LoginRepository) : LoginUseCase {
@@ -78,11 +77,11 @@ class NetworkModule {
         return  EmployeeDetailUseCaseImpl(employeeDetailsRepository)
     }
 
-    @Singleton
+   /* @Singleton
     @Provides
     fun providesEmployeeRepository(employeeDetailsRepositoryImpl: EmployeeDetailsRepositoryImpl): EmployeeDetailsRepository {
         return employeeDetailsRepositoryImpl
-    }
+    }*/
 
 
     @Provides
@@ -116,7 +115,23 @@ class NetworkModule {
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
+    @Provides
+    @Singleton
+    fun provideEmployeeRepository(employeeApi: Api, restaurantMapper: EmployeeMapper,employeeDatabase: AppDatabase): EmployeeDetailsRepository {
+        return EmployeeDetailsRepositoryImpl(employeeApi,employeeDatabase, restaurantMapper)
+    }
 
+    @Provides
+    @Singleton
+    fun provideLoginRepository(employeeApi: Api, restaurantMapper: LoginMapper): LoginRepository {
+        return LoginRepositoryImpl(employeeApi, restaurantMapper)
+    }
+
+   /* @Singleton
+    @Provides
+    fun providesLoginRepository(api : Api,loginMapper: LoginMapper): LoginRepository {
+        return LoginRepositoryImpl(api,loginMapper)
+    }*/
     /* @Provides
      @Singleton
      fun provideObjectMapper(): ObjectMapper = ObjectMapper()

@@ -3,9 +3,9 @@ package com.employee.data.login.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.employee.data.login.dao.EmployeeDataDao
-import com.employee.domain.login.entity.response.Data
+import com.employee.domain.model.EmployeeData
 
-@Database(entities = [Data::class], version = 1, exportSchema = false)
+@Database(entities = [EmployeeData::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract val employeeDataDao: EmployeeDataDao
