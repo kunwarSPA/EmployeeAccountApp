@@ -12,15 +12,16 @@ import com.employee.domain.model.EmployeeData
 import com.kotlin.employeeaccountapp.dashboard.viewmodel.DashBoardActivityViewModel
 import com.kotlin.employeeaccountapp.rx.RxJavaTestHooksResetRule
 import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Single
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito.`when`
-import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.anyInt
 import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 
@@ -36,10 +37,11 @@ class DashBoardActivityViewModelTest {
     @Mock
     lateinit var callback: Callback<EmployeeData>
 
+    @Mock
     lateinit var employeeDetailUseCase: EmployeeDetailUseCase
   //  @Mock lateinit var allUsersUseCaseCallback  : BaseUseCase.Callback<EmployeeData>
     private lateinit var dashBoardActivityViewModel: DashBoardActivityViewModel
-
+    @Mock
     lateinit var  employeeData : EmployeeData
     @Mock
     lateinit var api: Api
@@ -50,11 +52,31 @@ class DashBoardActivityViewModelTest {
     @Mock
     lateinit var mapper: EmployeeMapper
 
+    @Mock
+    lateinit var employeeDetailsRepositoryImpl: EmployeeDetailsRepositoryImpl
+/*
+    @BeforeClass
+    fun setUpClass() {
+
+        // Override the default "out of the box" AndroidSchedulers.mainThread() Scheduler
+        //
+        // This is necessary here because otherwise if the static initialization block in AndroidSchedulers
+        // is executed before this, then the Android SDK dependent version will be provided instead.
+        //
+        // This would cause a java.lang.ExceptionInInitializerError when running the test as a
+        // Java JUnit test as any attempt to resolve the default underlying implementation of the
+        // AndroidSchedulers.mainThread() will fail as it relies on unavailable Android dependencies.
+
+        // Comment out this line to see the java.lang.ExceptionInInitializerError
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler { callable: Callable<Scheduler?>? -> Schedulers.trampoline() }
+    }*/
+
     @Before
     fun setUp() {
-        employeeDetailUseCase  = EmployeeDetailUseCaseImpl(employeeDetailsRepository)
+        MockitoAnnotations.initMocks(this);
+      //  employeeDetailUseCase  = EmployeeDetailUseCaseImpl(employeeDetailsRepository)
         dashBoardActivityViewModel = DashBoardActivityViewModel(employeeDetailUseCase)
-      employeeData = EmployeeData("avatar","a@g.com","first name",1,"last name")
+        employeeData = EmployeeData("avatar", "a@g.com", "first name", 1, "last name")
 
 
 
@@ -62,27 +84,11 @@ class DashBoardActivityViewModelTest {
 
     @Test
     fun `testGetEmployeeDetail`() {
-
-      /*  employeeData = EmployeeData("avatar","a@g.com","first name",1,"last name")
-        val employeeDetailsRepositoryImpl = EmployeeDetailsRepositoryImpl(api,appDatabase,mapper)
+        employeeDetailsRepositoryImpl = (EmployeeDetailsRepositoryImpl(api, appDatabase, mapper))
         employeeDetailUseCase  = EmployeeDetailUseCaseImpl(employeeDetailsRepositoryImpl)
-        dashBoardActivityViewModel = DashBoardActivityViewModel(employeeDetailUseCase)
-
-        val callback : Callback<EmployeeData> = callback
-        given(employeeDetailsRepository.getUserDetail(id)).willReturn(Single.amb(mock()))
-
-        given(api.getUserDetail(id)).willReturn( Single.just(mock()))
-
-        verify(employeeDetailUseCase.getEmployeeDetail(id,callback).doOnSubscribe { callback.onSuccess(employeeData) })*/
-        val id = 1
-        val employeeDetailsRepositoryImpl = EmployeeDetailsRepositoryImpl(api,appDatabase,mapper)
-        employeeDetailUseCase  = EmployeeDetailUseCaseImpl(employeeDetailsRepositoryImpl)
-        val callback : Callback<EmployeeData> = callback
-        `when`(api.getUserDetail(id)).thenReturn( Single.just(mock()))
-        given(employeeDetailsRepository.getUserDetail(id)).willReturn(Single.just(mock()))
-       // `when`(employeeDetailUseCase.getEmployeeDetail(id,callback)).thenReturn(Observable.just(mock()))
-        dashBoardActivityViewModel.getEmployeeDetail(id,true)
-        verify(callback).onSuccess(mock())
+        this.callback.onSuccess(employeeData)
+        `when`(api.getUserDetail(anyInt())).thenReturn(Single.just(mock()))
+        Assert.assertNotNull(employeeDetailUseCase.getEmployeeDetail(1, callback))
     }
 
 }
