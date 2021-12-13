@@ -8,6 +8,6 @@ interface EmployeeDetailsRepository {
     fun getUserDetail(userId: Int): Single<EmployeeData>
     suspend fun editUser(userId: Int, employeeUpdate: EmployeeUpdate): EmployeeUpdate
     fun getUserDetailFromLocalDb(userId: Int): EmployeeData
-    fun updateEmployeeData(employeeData: EmployeeData): Long
+    fun insertEmployeeDataInDb(employeeData: EmployeeData): Long
     fun updateEmployeeDetailInDb(employeeData: EmployeeData)
 }

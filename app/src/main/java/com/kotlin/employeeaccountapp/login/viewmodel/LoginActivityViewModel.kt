@@ -22,7 +22,11 @@ class LoginActivityViewModel @ViewModelInject constructor(private val loginUseCa
     fun login(employeeLogin: EmployeeLogin) {
         loginUseCase.login(employeeLogin,true) .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { handleResult(it) }
+            .subscribe(
+                { value ->  handleResult(value) }, // onNext
+                { error -> println("Error: $error") },    // onError
+                { println("Completed!") }                 // onComplete
+            )
             .addTo(disposables)
       //  loginStatusLiveData.value = LoginStatus.Success
     }

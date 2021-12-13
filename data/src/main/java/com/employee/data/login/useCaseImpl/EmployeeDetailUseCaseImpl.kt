@@ -57,4 +57,10 @@ class EmployeeDetailUseCaseImpl   @Inject constructor(private val repository: Em
 
     }
 
+    override fun insertEmployeeDetailInDb(
+        employeeData: EmployeeData,
+    ) {
+        repository.insertEmployeeDataInDb(employeeData)
+    }
+
 }

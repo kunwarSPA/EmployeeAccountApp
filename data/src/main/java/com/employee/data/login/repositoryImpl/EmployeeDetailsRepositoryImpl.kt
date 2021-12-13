@@ -26,7 +26,7 @@ class EmployeeDetailsRepositoryImpl @Inject constructor(
         return database.employeeDataDao.loadEmployee(userId)
     }
 
-    override fun updateEmployeeData(employeeData: EmployeeData): Long {
+    override fun insertEmployeeDataInDb(employeeData: EmployeeData): Long {
         return database.employeeDataDao.insert(employeeData)
     }
 

@@ -1,11 +1,16 @@
 package com.kotlin.employeeaccountapp.dashboard.landing
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -37,10 +42,11 @@ class LandingFragment : Fragment() {
         } else throw ClassCastException(context.toString() + "must implement OnDashboardCallback!")
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentDashboardBinding.inflate(inflater, container, false)
         viewModel.userDataLiveData.observe(viewLifecycleOwner, ::userStatusUpdate)
-        viewModel.getEmployeeDetail(1, true)
+        context?.let { isOnline(it) }?.let { viewModel.getEmployeeDetail(1, it) }
         binding.editFab.visibility = View.GONE
         binding.editFabTv.visibility = View.GONE
         binding.logoutFab.visibility = View.GONE
@@ -109,5 +115,28 @@ class LandingFragment : Fragment() {
                 arguments = Bundle().apply {
                 }
             }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
 }

@@ -18,5 +18,8 @@ class LoginUseCaseImpl  @Inject constructor(private val repository: LoginReposit
             APIResult.Success(data) as  APIResult<LoginData>
         }
             .onErrorReturn {  APIResult.Failure(it.localizedMessage) }
+
     }
+
+
 }

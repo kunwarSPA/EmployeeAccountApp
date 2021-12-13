@@ -60,6 +60,7 @@ class DashBoardActivityViewModel @ViewModelInject constructor(
     private val allUsersUseCaseCallback = object : Callback<EmployeeData> {
         override fun onSuccess(result: EmployeeData) {
             userDataLiveData.postValue(APIResult.Success(data = result))
+            employeeDetailUseCase.insertEmployeeDetailInDb(result)
         }
 
         override fun onError(throwable: Throwable) {
